@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
 
 from django.contrib.auth.models import User
 
@@ -10,7 +9,7 @@ class Account(models.Model):
     summary = models.TextField('Summary about user', default='New user on our platform!')
     location = models.TextField('Place of residence', default='Location is not specified.')
     about = models.TextField('About', default='Apparently, this user prefers to keep an air of mystery about them.')
-    other_skills = ArrayField(models.CharField('Other skills', max_length=30), null=True)
+    other_skills = models.TextField('Other skills', null=True, blank=True, help_text='Comma-separated skills')
 
     def __str__(self):
         return f'{self.user.username} Account'
