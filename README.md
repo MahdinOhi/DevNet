@@ -1,4 +1,4 @@
-# :computer: DevSearch - Connect With Developers From Around The World!
+# :computer: DevNet - Connect With Developers From Around The World!
 
 ### Technologies Stack
 - Django
@@ -29,8 +29,8 @@
 
 ### Run it yourself
 ```sh
-git clone https://github.com/h4cktivist/devSearch.git
-cd devSearch
+git clone https://github.com/h4cktivist/DevNet.git
+cd DevNet
 pip install - r requirements.txt
 ```
 
@@ -39,7 +39,7 @@ Go to the `setting.py` and change this lines up to your PostgreSQL account
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'devSearch',
+        'NAME': 'DevNet',
         'HOST': 'localhost',
         'PORT': '5432',
         'USER': 'postgres',
