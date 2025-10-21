@@ -21,77 +21,85 @@
 </head>
 
 <body>
-  <!-- Header Section -->
-  <header class="header">
-    <div class="container container--narrow">
-      <a href="/" class="header__logo">
-        <img src="{% static 'images/logo.svg' %}" alt="DevNet Logo" />
+  <!-- Header -->
+<header class="header">
+  <div class="container">
+    <a href="/" class="header__logo">
+      <img src="{% static 'images/logo.svg' %}" alt="DevNet Logo" />
+    </a>
+    
+    <nav class="header__nav">
+      <input type="checkbox" id="responsive-menu" />
+      <label for="responsive-menu" class="toggle-menu">
+        <div class="toggle-menu__lines"></div>
+      </label>
+      <ul class="header__menu">
+        <li class="header__menuItem"><a href="{% url 'index' %}">Home</a></li>
+        <li class="header__menuItem"><a href="{% url 'index' %}">Developers</a></li>
+        <li class="header__menuItem"><a href="{% url 'projects' %}">Projects</a></li>
+        <li class="header__menuItem"><a href="">About Us</a></li>
+      </ul>
+    </nav>
+    
+    <div class="header__actions">
+      <!-- Theme Toggle -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      
+      <!-- User Account Icon -->
+      <a href="{% url 'account' %}" class="header__account" aria-label="User Account">
+       <img width="24" height="24" src="https://img.icons8.com/material-rounded/24/1A1A1A/user-male-circle.png" alt="user-male-circle"/>
       </a>
       
-      <nav class="header__nav">
-        <input type="checkbox" id="responsive-menu" />
-        <label for="responsive-menu" class="toggle-menu">
-          <span>Menu</span>
-          <div class="toggle-menu__lines"></div>
-        </label>
-        <ul class="header__menu">
-          <li class="header__menuItem"><a href="{% url 'index' %}">Developers</a></li>
-          <li class="header__menuItem"><a href="{% url 'projects' %}">Projects</a></li>
-          <li class="header__menuItem"><a href="{% url 'inbox' %}">Inbox</a></li>
-        </ul>
-      </nav>
-
-      <div class="header__actions">
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-          <svg class="theme-toggle__icon theme-toggle__icon--sun" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <svg class="theme-toggle__icon theme-toggle__icon--moon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        
-        <a href="{% url 'account' %}" class="header__account">My Account</a>
-        
-        {% if request.user.username %}
-          <a href="{% url 'logout' %}" class="btn btn--sub">Log Out</a>
-        {% else %}
-          <a href="{% url 'login' %}" class="btn btn--sub">Login/Sign Up</a>
-        {% endif %}
-      </div>
+      <!-- Inbox Icon -->
+      <a href="{% url 'inbox' %}" class="header__inbox" aria-label="Inbox">
+       <img width="27" height="27" src="https://img.icons8.com/sf-regular-filled/48/1A1A1A/secured-letter.png" alt="secured-letter"/>
+      </a>
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- Main Section -->
-  <section class="hero-section text-center">
-  <div class="container container--narrow">
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
     <div class="glass">
       <div class="hero-section__box">
-        <h2>CONNECT WITH <span>DEVELOPERS</span></h2>
-        <h2>FROM AROUND THE WORLD <span class="hero-globe">🌎</span></h2>
+        <h1>Find the Perfect <span class="highlight">Developer</span> for Your Project</h1>
+        <p>Join the most innovative developer community and showcase your skills to the world</p>
       </div>
-
+      
       <div class="hero-section__search">
-        <form class="form" method="post">
+        <form class="form" method="post" action="{% url 'index' %}">
           {% csrf_token %}
           <div class="form__field">
-            <label for="formInput#search">Search Developers </label>
+            <label for="formInput#search">Search Developers</label>
             <input 
-              class="input input--text" 
-              id="formInput#search" 
-              type="text" 
+              class="input input--text"
+              id="formInput#search"
+              type="text"
               name="search"
-              placeholder="Search developer by name...................." 
+              placeholder="Search Developers, Projects & tags"
             />
           </div>
-          <input class="btn btn--sub btn--lg" type="submit" value="Search" />
+          <button class="btn btn--sub btn--lg" type="submit">Search</button>
         </form>
       </div>
-
+      
       <div class="hero-section__cta">
-        <a href="{% url 'login' %}" class="btn btn--outline btn--lg">Join the Community</a>
-        <a href="" class="btn btn--outline btn--lg">Learn More</a>
+        {% if request.user.username %}
+          <a href="{% url 'account' %}" class="btn btn--sub btn--lg">My Account</a>
+          <a href="{% url 'logout' %}" class="btn btn--outline btn--lg">Log Out</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="btn btn--sub btn--lg">Login</a>
+          <a href="{% url 'login' %}" class="btn btn--outline btn--lg">Sign Up</a>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -169,16 +177,7 @@
         </a>
       </div>
 
-      <nav class="footer__nav">
-        <div class="footer__column">
-          <a href="" class="footer__link">About</a>
-          <a href="" class="footer__link">Services</a>
-        </div>
-        <div class="footer__column">
-          <a href="" class="footer__link">Contact</a>
-          <a href="" class="footer__link">Terms</a>
-        </div>
-      </nav>
+      
     </div>
 
     <div class="footer__copyright">
