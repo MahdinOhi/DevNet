@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+  <!-- Icon - IconMonster -->
+  <link rel="stylesheet" href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css" />
+  <!-- Mumble UI -->
+  <link rel="stylesheet" href="{% static 'uikit/styles/uikit.css' %}" />
+  <!-- Dev Search UI -->
+  <link rel="stylesheet" href="{% static 'styles/app.css' %}" />
+
+  <title>{% block title %}DevNet - Connect with Developers!{% endblock %}</title>
+  
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="container container--narrow">
+      <a href="{% url 'index' %}" class="header__logo">
+        <img src="{% static 'images/logo.svg' %}" alt="DevNet Logo" />
+      </a>
+      <nav class="header__nav">
+        <input type="checkbox" id="responsive-menu" />
+        <label for="responsive-menu" class="toggle-menu">
+          <span>Menu</span>
+          <div class="toggle-menu__lines"></div>
+        </label>
+        <ul class="header__menu">
+          <li class="header__menuItem"><a href="{% url 'index' %}">Developers</a></li>
+          <li class="header__menuItem"><a href="{% url 'projects' %}">Projects</a></li>
+          <li class="header__menuItem"><a href="{% url 'inbox' %}">Inbox</a></li>
+          <li class="header__menuItem"><a href="{% url 'account' %}">My Account</a></li>
+          {% block auth_nav %}
+            {% if request.user.username %}
+              <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Log Out</a></li>
+            {% else %}
+              <li class="header__menuItem"><a href="{% url 'login' %}" class="btn btn--sub">Login/Sign Up</a></li>
+            {% endif %}
+          {% endblock %}
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <i class="im im-sun theme-toggle__icon theme-toggle__icon--sun"></i>
+          <i class="im im-moon theme-toggle__icon theme-toggle__icon--moon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="{% block main_class %}{% endblock %}">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Theme Toggle and Animation Script -->
+  <script>
+    // Enhanced Theme Toggle Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const themeToggle = document.getElementById('theme-toggle');
+      const html = document.documentElement;
+      const body = document.body;
+      
+      // Page load animation
+      body.classList.add('loading');
+      setTimeout(() => {
+        body.classList.remove('loading');
+        body.classList.add('loaded');
+      }, 100);
+      
+      // Check for saved theme preference or default to dark mode
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      
+      // Set initial theme
+      html.setAttribute('data-theme', currentTheme);
+      
+      // Update toggle button state
+      updateToggleButton(currentTheme);
+      
+      // Toggle theme on button click
+      themeToggle.addEventListener('click', function() {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Apply new theme
+        html.setAttribute('data-theme', newTheme);
+        
+        // Save theme preference
+        localStorage.setItem('theme', newTheme);
+        
+        // Update toggle button
+        updateToggleButton(newTheme);
+        
+        // Add smooth transition effect
+        html.style.transition = 'all 0.3s ease';
+        setTimeout(() => {
+          html.style.transition = '';
+        }, 300);
+      });
+      
+      function updateToggleButton(theme) {
+        const sunIcon = themeToggle.querySelector('.theme-toggle__icon--sun');
+        const moonIcon = themeToggle.querySelector('.theme-toggle__icon--moon');
+        
+        if (theme === 'dark') {
+          sunIcon.style.opacity = '1';
+          sunIcon.style.transform = 'rotate(0deg) scale(1)';
+          moonIcon.style.opacity = '0';
+          moonIcon.style.transform = 'rotate(90deg) scale(0.5)';
+        } else {
+          sunIcon.style.opacity = '0';
+          sunIcon.style.transform = 'rotate(-90deg) scale(0.5)';
+          moonIcon.style.opacity = '1';
+          moonIcon.style.transform = 'rotate(0deg) scale(1)';
+        }
+      }
+    });
+  </script>
+  
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
