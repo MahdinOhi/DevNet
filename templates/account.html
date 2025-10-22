@@ -77,6 +77,48 @@
                 {{ user.account.about }}
             </p>
           </div>
+          
+          <!-- Resume Upload Section -->
+          <div class="devInfo">
+            <h3 class="devInfo__title">Resume/Portfolio</h3>
+            <form method="post" action="{% url 'upload-resume' %}" enctype="multipart/form-data" class="form">
+              {% csrf_token %}
+              <div class="form__field">
+                <label for="resume">Upload Resume/Portfolio (DOCX or PDF)</label>
+                <input type="file" id="resume" name="resume" accept=".docx,.pdf" required>
+                <p class="form__help">Upload your resume or portfolio as a DOCX or PDF file. The system will automatically extract and display your information, and update your skills and projects.</p>
+              </div>
+              <button class="btn btn--sub btn--lg" type="submit">Upload Resume</button>
+            </form>
+            
+            {% if user.account.resume_file %}
+              <div class="resume-info" style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
+                <h4>Current Resume: <a href="{{ user.account.resume_file.url }}" target="_blank">{{ user.account.resume_file.name|slice:"12:" }}</a></h4>
+                
+                {% if user.account.resume_skills %}
+                  <div style="margin-top: 10px;">
+                    <strong>Extracted Skills:</strong>
+                    <p>{{ user.account.resume_skills }}</p>
+                  </div>
+                {% endif %}
+                
+                {% if user.account.resume_experience %}
+                  <div style="margin-top: 10px;">
+                    <strong>Extracted Experience:</strong>
+                    <p>{{ user.account.resume_experience }}</p>
+                  </div>
+                {% endif %}
+                
+                {% if user.account.resume_education %}
+                  <div style="margin-top: 10px;">
+                    <strong>Extracted Education:</strong>
+                    <p>{{ user.account.resume_education }}</p>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+          
           <div class="settings">
             <h3 class="settings__title">Skills</h3>
             <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'add-skill' %}"><i class="im im-plus"></i> Add Skill</a>

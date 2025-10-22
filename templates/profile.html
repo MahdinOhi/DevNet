@@ -74,6 +74,43 @@
             <h3 class="devInfo__title">About Me</h3>
             <p class="devInfo__about">{{ user.account.about }}</p>
           </div>
+          
+          {% if user.account.resume_file %}
+          <div class="devInfo">
+            <h3 class="devInfo__title">Resume Information</h3>
+            <div class="resume-display" style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+              <p><strong>Resume:</strong> <a href="{{ user.account.resume_file.url }}" target="_blank" class="btn btn--sub btn--sm">View Resume</a></p>
+              
+              {% if user.account.resume_skills %}
+                <div style="margin-top: 10px;">
+                  <strong>Skills from Resume:</strong>
+                  <div class="devInfo__otherSkills">
+                    {% for skill in user.account.resume_skills|split:"," %}
+                      <span class="tag tag--pill tag--sub tag--lg">
+                        <small>{{ skill|strip }}</small>
+                      </span>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+              
+              {% if user.account.resume_experience %}
+                <div style="margin-top: 10px;">
+                  <strong>Experience:</strong>
+                  <p>{{ user.account.resume_experience }}</p>
+                </div>
+              {% endif %}
+              
+              {% if user.account.resume_education %}
+                <div style="margin-top: 10px;">
+                  <strong>Education:</strong>
+                  <p>{{ user.account.resume_education }}</p>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
           <div class="devInfo">
             <h3 class="devInfo__title">Skills</h3>
             <div class="devInfo__skills">

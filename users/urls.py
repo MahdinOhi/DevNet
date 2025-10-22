@@ -18,5 +18,7 @@ urlpatterns = [
     path('account/add-project', views.addProject, name='add-project'),
     path('account/edit-project/<int:id>', views.editProject, name='edit-project'),
     path('account/delete-project/<int:id>', views.deleteProject, name='delete-project'),
+    
+    path('account/upload-resume', views.uploadResume, name='upload-resume'),
 
 ]

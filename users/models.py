@@ -10,6 +10,13 @@ class Account(models.Model):
     location = models.TextField('Place of residence', default='Location is not specified.')
     about = models.TextField('About', default='Apparently, this user prefers to keep an air of mystery about them.')
     other_skills = models.TextField('Other skills', null=True, blank=True, help_text='Comma-separated skills')
+    
+    # Resume/Portfolio fields
+    resume_file = models.FileField(upload_to='resumes/', null=True, blank=True, help_text='Upload your resume/portfolio as DOCX file')
+    resume_content = models.TextField('Resume Content', null=True, blank=True, help_text='Extracted content from resume')
+    resume_skills = models.TextField('Resume Skills', null=True, blank=True, help_text='Skills extracted from resume')
+    resume_experience = models.TextField('Resume Experience', null=True, blank=True, help_text='Experience extracted from resume')
+    resume_education = models.TextField('Resume Education', null=True, blank=True, help_text='Education extracted from resume')
 
     def __str__(self):
         return f'{self.user.username} Account'
