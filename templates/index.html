@@ -186,27 +186,39 @@
   </div>
 </footer>
   </main>
-</body>
+  <script>
+    // Header Scroll Effect - Add glow when scrolling
+    document.addEventListener('DOMContentLoaded', function() {
+      const header = document.querySelector('.header');
+      let scrollThreshold = 50; // Pixels to scroll before effect triggers
 
-<script>
+      // Add scroll event listener
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > scrollThreshold) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
 
-  // Theme Toggle Functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const themeToggle = document.getElementById('theme-toggle');
-  const body = document.body;
-  
-  // Check for saved theme preference or default to light mode
-  const currentTheme = localStorage.getItem('theme') || 'light';
-  body.classList.toggle('dark-theme', currentTheme === 'dark');
-  
-  // Toggle theme on button click
-  themeToggle.addEventListener('click', function() {
-    body.classList.toggle('dark-theme');
-    
-    // Save theme preference
-    const theme = body.classList.contains('dark-theme') ? 'dark' : 'light';
-    localStorage.setItem('theme', theme);
-  });
-});
+      // Theme Toggle Functionality
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+          document.body.classList.toggle('dark-theme');
+          
+          // Save theme preference to localStorage
+          const isDark = document.body.classList.contains('dark-theme');
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-theme');
+        }
+      }
+    });
 </script>
+</body>
 </html>

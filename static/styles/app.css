@@ -276,6 +276,46 @@ body.dark-theme .theme-toggle__icon--moon {
   display: none;
 }
 
+/* Enhanced glow when scrolled */
+.header.scrolled .header__logo {
+  border: 2px solid rgba(108, 92, 231, 0.6);
+  box-shadow: 
+    0 0 20px rgba(108, 92, 231, 0.4),
+    0 8px 32px 0 rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* Enhanced glow when scrolled */
+.header.scrolled .header__menu {
+  background: rgba(255, 255, 255, 0.2);
+  border: 3px solid rgba(108, 92, 231, 0.6);
+  box-shadow: 
+    0 0 20px rgba(108, 92, 231, 0.4),
+    0 8px 32px 0 rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* Enhanced glow when scrolled */
+.header.scrolled .theme-toggle {
+  border: 3px solid rgba(108, 92, 231, 0.6);
+  box-shadow: 
+    0 0 15px rgba(108, 92, 231, 0.4),
+    0 8px 32px 0 rgba(0, 0, 0, 0.25);
+}
+/* Enhanced glow when scrolled */
+.header.scrolled .header__account {
+  border: 3px solid rgba(108, 92, 231, 0.6);
+  box-shadow: 
+    0 0 15px rgba(108, 92, 231, 0.4),
+    0 8px 32px 0 rgba(0, 0, 0, 0.25);
+}
+/* Enhanced glow when scrolled */
+.header.scrolled .header__inbox {
+  border: 3px solid rgba(108, 92, 231, 0.6);
+  box-shadow: 
+    0 0 15px rgba(108, 92, 231, 0.4),
+    0 8px 32px 0 rgba(0, 0, 0, 0.25);
+}
+
+
 /* Responsive Design */
 @media screen and (max-width: 768px) {
   .header > .container {
@@ -984,7 +1024,7 @@ body.dark-theme .theme-toggle__icon--moon {
 
 .profile .card > .dev {
   padding: 4rem;
-  background: rgba(255, 255, 255, 0.15); /* semi-transparent */
+  background: rgba(255, 255, 255, 0); /* semi-transparent */
   border: 1px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(25px) saturate(180%);
   -webkit-backdrop-filter: blur(25px) saturate(180%);
