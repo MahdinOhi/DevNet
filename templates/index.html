@@ -76,8 +76,7 @@
       </div>
       
       <div class="hero-section__search">
-        <form class="form" method="post" action="{% url 'index' %}">
-          {% csrf_token %}
+        <form class="form" method="get" action="{% url 'index' %}" id="searchForm">
           <div class="form__field">
             <label for="formInput#search">Search Developers</label>
             <input 
@@ -85,10 +84,90 @@
               id="formInput#search"
               type="text"
               name="search"
+              value="{{ search_query }}"
               placeholder="Search Developers, Projects & tags"
             />
           </div>
-          <button class="btn btn--sub btn--lg" type="submit">Search</button>
+          
+          <!-- Advanced Search Filters -->
+          <div class="advanced-search" id="advancedSearch" style="display: none;">
+            <div class="form__field">
+              <label for="location">Location</label>
+              <input 
+                class="input input--text"
+                id="location"
+                type="text"
+                name="location"
+                value="{{ location_filter }}"
+                placeholder="Enter location"
+                autocomplete="off"
+              />
+              <div class="autocomplete-suggestions" id="locationSuggestions"></div>
+            </div>
+            
+            <div class="form__field">
+              <label for="experience">Experience Level</label>
+              <select class="input input--text" id="experience" name="experience">
+                <option value="">All Experience Levels</option>
+                {% for value, label in experience_levels %}
+                  <option value="{{ value }}" {% if experience_filter == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            
+            <div class="form__field">
+              <label for="tech_stack">Technology Stack</label>
+              <input 
+                class="input input--text"
+                id="tech_stack"
+                type="text"
+                name="tech_stack"
+                value="{{ tech_stack_filter }}"
+                placeholder="e.g., Python, React, Django"
+                autocomplete="off"
+              />
+              <div class="autocomplete-suggestions" id="techStackSuggestions"></div>
+            </div>
+            
+            <div class="form__field">
+              <label for="availability">Availability Status</label>
+              <select class="input input--text" id="availability" name="availability">
+                <option value="">All Availability</option>
+                {% for value, label in availability_statuses %}
+                  <option value="{{ value }}" {% if availability_filter == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            
+            <div class="form__field">
+              <label for="skills">Skills (comma-separated)</label>
+              <input 
+                class="input input--text"
+                id="skills"
+                type="text"
+                name="skills"
+                value="{{ skill_filter }}"
+                placeholder="e.g., Python, JavaScript, React"
+                autocomplete="off"
+              />
+              <div class="autocomplete-suggestions" id="skillSuggestions"></div>
+            </div>
+            
+            <div class="form__field">
+              <label for="operator">Search Operator</label>
+              <select class="input input--text" id="operator" name="operator">
+                <option value="AND" {% if search_operator == 'AND' %}selected{% endif %}>AND (all skills must match)</option>
+                <option value="OR" {% if search_operator == 'OR' %}selected{% endif %}>OR (any skill can match)</option>
+                <option value="NOT" {% if search_operator == 'NOT' %}selected{% endif %}>NOT (exclude these skills)</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="search-buttons">
+            <button class="btn btn--sub btn--lg" type="submit">Search</button>
+            <button class="btn btn--outline btn--lg" type="button" id="toggleAdvanced">Advanced Filters</button>
+            <button class="btn btn--outline btn--sm" type="button" id="clearFilters">Clear All</button>
+          </div>
         </form>
       </div>
       
@@ -218,6 +297,90 @@
           document.body.classList.add('dark-theme');
         }
       }
+
+      // Advanced Search Functionality
+      const toggleAdvanced = document.getElementById('toggleAdvanced');
+      const advancedSearch = document.getElementById('advancedSearch');
+      const clearFilters = document.getElementById('clearFilters');
+      
+      if (toggleAdvanced) {
+        toggleAdvanced.addEventListener('click', function() {
+          if (advancedSearch.style.display === 'none') {
+            advancedSearch.style.display = 'block';
+            toggleAdvanced.textContent = 'Hide Filters';
+          } else {
+            advancedSearch.style.display = 'none';
+            toggleAdvanced.textContent = 'Advanced Filters';
+          }
+        });
+      }
+      
+      if (clearFilters) {
+        clearFilters.addEventListener('click', function() {
+          document.getElementById('searchForm').reset();
+          window.location.href = '{% url "index" %}';
+        });
+      }
+
+      // Autocomplete functionality
+      function setupAutocomplete(inputId, suggestionsId, apiEndpoint) {
+        const input = document.getElementById(inputId);
+        const suggestions = document.getElementById(suggestionsId);
+        let timeout;
+
+        if (input && suggestions) {
+          input.addEventListener('input', function() {
+            clearTimeout(timeout);
+            const query = this.value.trim();
+            
+            if (query.length < 2) {
+              suggestions.innerHTML = '';
+              suggestions.style.display = 'none';
+              return;
+            }
+
+            timeout = setTimeout(() => {
+              fetch(`${apiEndpoint}?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                  const items = data[Object.keys(data)[0]]; // Get the first property value
+                  if (items && items.length > 0) {
+                    suggestions.innerHTML = items.map(item => 
+                      `<div class="suggestion-item" onclick="selectSuggestion('${inputId}', '${item.replace(/'/g, "\\'")}')">${item}</div>`
+                    ).join('');
+                    suggestions.style.display = 'block';
+                  } else {
+                    suggestions.innerHTML = '';
+                    suggestions.style.display = 'none';
+                  }
+                })
+                .catch(error => {
+                  console.error('Autocomplete error:', error);
+                  suggestions.innerHTML = '';
+                  suggestions.style.display = 'none';
+                });
+            }, 300);
+          });
+
+          // Hide suggestions when clicking outside
+          document.addEventListener('click', function(e) {
+            if (!input.contains(e.target) && !suggestions.contains(e.target)) {
+              suggestions.style.display = 'none';
+            }
+          });
+        }
+      }
+
+      // Setup autocomplete for different fields
+      setupAutocomplete('location', 'locationSuggestions', '{% url "location-autocomplete" %}');
+      setupAutocomplete('skills', 'skillSuggestions', '{% url "skill-autocomplete" %}');
+      setupAutocomplete('tech_stack', 'techStackSuggestions', '{% url "tech-stack-autocomplete" %}');
+
+      // Global function to select suggestion
+      window.selectSuggestion = function(inputId, value) {
+        document.getElementById(inputId).value = value;
+        document.getElementById(inputId + 'Suggestions').style.display = 'none';
+      };
     });
 </script>
 </body>

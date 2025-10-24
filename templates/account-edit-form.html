@@ -94,6 +94,34 @@
                             value="{% for skill in user.account.other_skills %}{{ skill }}, {% endfor %}" />
                     </div>
 
+                    <!-- New Advanced Fields -->
+                    <div class="form__field">
+                        <label for="experience_level">Experience Level: </label>
+                        <select class="input input--text" id="experience_level" name="experience_level" required>
+                            <option value="junior" {% if user.account.experience_level == 'junior' %}selected{% endif %}>Junior (0-2 years)</option>
+                            <option value="mid" {% if user.account.experience_level == 'mid' %}selected{% endif %}>Mid-level (3-5 years)</option>
+                            <option value="senior" {% if user.account.experience_level == 'senior' %}selected{% endif %}>Senior (6+ years)</option>
+                        </select>
+                    </div>
+
+                    <div class="form__field">
+                        <label for="availability_status">Availability Status: </label>
+                        <select class="input input--text" id="availability_status" name="availability_status" required>
+                            <option value="open" {% if user.account.availability_status == 'open' %}selected{% endif %}>Open to work</option>
+                            <option value="busy" {% if user.account.availability_status == 'busy' %}selected{% endif %}>Busy</option>
+                            <option value="available" {% if user.account.availability_status == 'available' %}selected{% endif %}>Available for projects</option>
+                            <option value="not_looking" {% if user.account.availability_status == 'not_looking' %}selected{% endif %}>Not looking</option>
+                        </select>
+                    </div>
+
+                    <div class="form__field">
+                        <label for="technology_stack">Technology Stack: </label>
+                        <input class="input input--text" id="technology_stack" type="text" name="technology_stack"
+                            placeholder="e.g., Python, React, Django, JavaScript"
+                            value="{{ user.account.technology_stack }}" />
+                        <small>Comma-separated list of technologies you work with</small>
+                    </div>
+
                     <div class="form__field">
                         <label for="formInput#text">Avatar: </label>
                         <input class="input input--text" id="formInput#text" type="file" accept="image/*" name="avatar"/>

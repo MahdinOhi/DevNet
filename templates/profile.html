@@ -60,6 +60,35 @@
               <h2 class="dev__name">{{ user.first_name }} {{ user.last_name }}</h2>
               <p class="dev__title">{{ user.account.summary }}</p>
               <p class="dev__location">{{ user.account.location }}</p>
+              
+              <!-- New Profile Information -->
+              <div class="profile-info" style="margin: 1rem 0; padding: 1rem; background: rgba(255, 255, 255, 0.1); border-radius: 0.5rem;">
+                <div class="info-item" style="margin-bottom: 0.5rem;">
+                  <strong>Experience Level:</strong> 
+                  <span class="tag tag--pill tag--main">
+                    {{ user.account.get_experience_level_display }}
+                  </span>
+                </div>
+                <div class="info-item" style="margin-bottom: 0.5rem;">
+                  <strong>Availability:</strong> 
+                  <span class="tag tag--pill tag--sub">
+                    {{ user.account.get_availability_status_display }}
+                  </span>
+                </div>
+                {% if user.account.technology_stack %}
+                <div class="info-item">
+                  <strong>Tech Stack:</strong>
+                  <div class="tech-stack" style="margin-top: 0.5rem;">
+                    {% for tech in user.account.technology_stack|split:"," %}
+                      <span class="tag tag--pill tag--lg">
+                        <small>{{ tech|strip }}</small>
+                      </span>
+                    {% endfor %}
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+              
               <ul class="dev__social">
                 {% for link in user.account.link_set.all %}
                     <li>
