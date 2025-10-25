@@ -117,8 +117,8 @@ body{
   display: flex;
   gap: 1.5rem;
   align-items: center;
-  flex-wrap: wrap;
-  margin-top: 2rem;
+  
+  
   justify-content: center;
 }
 
@@ -130,6 +130,7 @@ body{
   transition: all 0.3s ease;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  white-space: nowrap;
 }
 
 .search-buttons .btn--sub {
@@ -953,8 +954,9 @@ body.dark-theme .theme-toggle__icon--moon {
 
 /* Search Section */
 .hero-section__search {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto 3.5rem;
+  margin-right: 5rem;
 }
 
 .hero-section__search .form {

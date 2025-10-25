@@ -31,6 +31,10 @@
   .btn--sub{
     padding: 0.9rem  2rem !important;
   }
+
+  .dev__location{
+    justify-content: center !important;
+  }
 </style>
 
 </head>
@@ -74,7 +78,7 @@
               <img class="avatar avatar--xl dev__avatar" src="{{ user.account.avatar.url }}" />
               <h2 class="dev__name">{{ user.first_name }} {{ user.last_name }}</h2>
               <p class="dev__title">{{ user.account.summary }}</p>
-              <p class="dev__location">{{ user.account.location }}</p>
+              <p class="dev__location">📍 {{ user.account.location }}</p>
               <ul class="dev__social">
                 {% for link in user.link_set.all %}
                     <li>

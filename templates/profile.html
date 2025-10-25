@@ -18,6 +18,22 @@
   <link rel="stylesheet" href="{% static 'styles/app.css' %}" />
 
   <title>DevNet - Connect with Developers!</title>
+  <style>
+     .container--narrow{
+    justify-content: flex-start !important;
+    gap: 35rem !important;
+  }
+  .header__menuItem > a{
+    font-size: 1.4rem !important;
+  }
+  .btn--sub{
+    padding: 0.9rem  2rem !important;
+  }
+
+    .dev__location{
+    justify-content: center !important;
+  }
+  </style>
   
 </head>
 
@@ -59,7 +75,7 @@
               <img class="avatar avatar--xl" src="{{ user.account.avatar.url }}" />
               <h2 class="dev__name">{{ user.first_name }} {{ user.last_name }}</h2>
               <p class="dev__title">{{ user.account.summary }}</p>
-              <p class="dev__location">{{ user.account.location }}</p>
+              <p class="dev__location">📍 {{ user.account.location }}</p>
               
               <!-- New Profile Information -->
               <div class="profile-info" style="margin: 1rem 0; padding: 1rem; background: rgba(255, 255, 255, 0.1); border-radius: 0.5rem;">
