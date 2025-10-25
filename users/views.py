@@ -322,6 +322,12 @@ def editAccount(request):
             user.account.location = request.POST.get('location')
             user.account.about = request.POST.get('about')
             user.account.other_skills = request.POST.get('skills').rsplit(', ')
+            
+            # Handle new advanced fields
+            user.account.experience_level = request.POST.get('experience_level', 'junior')
+            user.account.availability_status = request.POST.get('availability_status', 'available')
+            user.account.technology_stack = request.POST.get('technology_stack', '')
+            
             if request.FILES.get('avatar') is not None:
                 user.account.avatar = request.FILES.get('avatar')
 

@@ -108,11 +108,186 @@
               {% endfor %}
             </div>
           </div>
+          
+          <!-- Related Projects Section -->
+          <div class="related-projects-section" style="margin-top: 3rem;">
+            <h3 class="singleProject__subtitle">Related Projects</h3>
+            <div class="related-projects" id="relatedProjects">
+              <div class="loading-spinner" style="text-align: center; padding: 2rem;">
+                <div class="spinner" style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+                <p>Finding similar projects...</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     </div>
   </main>
+  
+  <style>
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .related-projects-section {
+      border-top: 2px solid #e0e0e0;
+      padding-top: 2rem;
+    }
+    
+    .related-project-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .related-project-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .related-project-thumbnail {
+      width: 80px;
+      height: 80px;
+      border-radius: 0.5rem;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    
+    .related-project-info {
+      flex: 1;
+    }
+    
+    .related-project-info h4 {
+      margin: 0 0 0.5rem 0;
+      color: #333;
+      font-size: 1.1rem;
+    }
+    
+    .related-project-info h4 a {
+      color: #333;
+      text-decoration: none;
+    }
+    
+    .related-project-info h4 a:hover {
+      color: #667eea;
+    }
+    
+    .related-project-info p {
+      margin: 0.25rem 0;
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    
+    .related-project-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    
+    .related-project-author {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .related-project-author img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .similarity-badge {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 1rem;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    .related-project-tags {
+      margin-top: 0.5rem;
+    }
+    
+    .related-project-tags .tag {
+      margin-right: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .no-related-projects {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load related projects
+      const projectId = {{ project.id }};
+      const relatedProjectsContainer = document.getElementById('relatedProjects');
+      
+      fetch(`/recommendations/api/projects/${projectId}/related/?limit=3`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.related_projects && data.related_projects.length > 0) {
+            relatedProjectsContainer.innerHTML = data.related_projects.map(project => `
+              <div class="related-project-card">
+                <img src="${project.image_url || '/static/images/default-project.png'}" 
+                     alt="${project.title}" 
+                     class="related-project-thumbnail">
+                <div class="related-project-info">
+                  <h4><a href="${project.project_url}">${project.title}</a></h4>
+                  <p>${project.description}</p>
+                  <div class="related-project-meta">
+                    <div class="related-project-author">
+                      <img src="${project.author_avatar || '/static/images/default-avatar.png'}" 
+                           alt="${project.author_name}">
+                      <a href="${project.author_profile_url}">${project.author_name}</a>
+                    </div>
+                    <div class="similarity-badge">
+                      ${Math.round(project.similarity_score * 100)}% Match
+                    </div>
+                  </div>
+                  <div class="related-project-tags">
+                    ${project.tags ? project.tags.split(',').map(tag => 
+                      `<span class="tag tag--pill tag--main"><small>${tag.trim()}</small></span>`
+                    ).join('') : ''}
+                  </div>
+                </div>
+              </div>
+            `).join('');
+          } else {
+            relatedProjectsContainer.innerHTML = `
+              <div class="no-related-projects">
+                <p>No similar projects found at the moment.</p>
+              </div>
+            `;
+          }
+        })
+        .catch(error => {
+          console.error('Error loading related projects:', error);
+          relatedProjectsContainer.innerHTML = `
+            <div class="no-related-projects">
+              <p>Unable to load related projects. Please try again later.</p>
+            </div>
+          `;
+        });
+    });
+  </script>
 </body>
 
 </html>
