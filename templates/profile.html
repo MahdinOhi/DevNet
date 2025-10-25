@@ -189,10 +189,143 @@
             {% endfor %}
             </div>
           </div>
+          
+          <!-- Related Users Section -->
+          <div class="devInfo">
+            <h3 class="devInfo__title">Related Developers</h3>
+            <div class="related-users" id="relatedUsers">
+              <div class="loading-spinner" style="text-align: center; padding: 2rem;">
+                <div class="spinner" style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+                <p>Finding similar developers...</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </main>
+  
+  <style>
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .related-user-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .related-user-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .related-user-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .related-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .related-user-info h4 {
+      margin: 0;
+      color: #333;
+      font-size: 1.1rem;
+    }
+    
+    .related-user-info p {
+      margin: 0.25rem 0 0 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    .similarity-badge {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 1rem;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    .related-user-skills {
+      margin-top: 0.5rem;
+    }
+    
+    .related-user-skills .tag {
+      margin-right: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .no-related-users {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load related users
+      const userId = {{ user.id }};
+      const relatedUsersContainer = document.getElementById('relatedUsers');
+      
+      fetch(`/recommendations/api/users/${userId}/related/?limit=4`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.related_users && data.related_users.length > 0) {
+            relatedUsersContainer.innerHTML = data.related_users.map(user => `
+              <div class="related-user-card">
+                <div class="related-user-header">
+                  <img src="${user.avatar_url || '/static/images/default-avatar.png'}" 
+                       alt="${user.first_name} ${user.last_name}" 
+                       class="related-user-avatar">
+                  <div class="related-user-info">
+                    <h4><a href="${user.profile_url}">${user.first_name} ${user.last_name}</a></h4>
+                    <p>${user.summary}</p>
+                  </div>
+                  <div class="similarity-badge">
+                    ${Math.round(user.similarity_score * 100)}% Match
+                  </div>
+                </div>
+                <div class="related-user-skills">
+                  <small><strong>Experience:</strong> ${user.experience_level}</small><br>
+                  <small><strong>Location:</strong> ${user.location}</small><br>
+                  <small><strong>Status:</strong> ${user.availability_status}</small>
+                </div>
+              </div>
+            `).join('');
+          } else {
+            relatedUsersContainer.innerHTML = `
+              <div class="no-related-users">
+                <p>No similar developers found at the moment.</p>
+              </div>
+            `;
+          }
+        })
+        .catch(error => {
+          console.error('Error loading related users:', error);
+          relatedUsersContainer.innerHTML = `
+            <div class="no-related-users">
+              <p>Unable to load related developers. Please try again later.</p>
+            </div>
+          `;
+        });
+    });
+  </script>
 </body>
 
 </html>

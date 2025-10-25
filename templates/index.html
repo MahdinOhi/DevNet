@@ -91,75 +91,92 @@
           
           <!-- Advanced Search Filters -->
           <div class="advanced-search" id="advancedSearch" style="display: none;">
-            <div class="form__field">
-              <label for="location">Location</label>
-              <input 
-                class="input input--text"
-                id="location"
-                type="text"
-                name="location"
-                value="{{ location_filter }}"
-                placeholder="Enter location"
-                autocomplete="off"
-              />
-              <div class="autocomplete-suggestions" id="locationSuggestions"></div>
+            <div class="search-filters-grid">
+              <div class="form__field">
+                <label for="location">📍 Location</label>
+                <input 
+                  class="input input--text"
+                  id="location"
+                  type="text"
+                  name="location"
+                  value="{{ location_filter }}"
+                  placeholder="Enter location (e.g., New York, Remote)"
+                  autocomplete="off"
+                />
+                <div class="autocomplete-suggestions" id="locationSuggestions"></div>
+              </div>
+              
+              <div class="form__field">
+                <label for="experience">💼 Experience Level</label>
+                <select class="input input--text" id="experience" name="experience">
+                  <option value="">All Experience Levels</option>
+                  {% for value, label in experience_levels %}
+                    <option value="{{ value }}" {% if experience_filter == value %}selected{% endif %}>{{ label }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              
+              <div class="form__field">
+                <label for="tech_stack">⚡ Technology Stack</label>
+                <input 
+                  class="input input--text"
+                  id="tech_stack"
+                  type="text"
+                  name="tech_stack"
+                  value="{{ tech_stack_filter }}"
+                  placeholder="e.g., Python, React, Django"
+                  autocomplete="off"
+                />
+                <div class="autocomplete-suggestions" id="techStackSuggestions"></div>
+              </div>
+              
+              <div class="form__field">
+                <label for="availability">🟢 Availability Status</label>
+                <select class="input input--text" id="availability" name="availability">
+                  <option value="">All Availability</option>
+                  {% for value, label in availability_statuses %}
+                    <option value="{{ value }}" {% if availability_filter == value %}selected{% endif %}>{{ label }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              
+              <div class="form__field form__field--wide">
+                <label for="skills">🛠️ Skills (comma-separated)</label>
+                <input 
+                  class="input input--text"
+                  id="skills"
+                  type="text"
+                  name="skills"
+                  value="{{ skill_filter }}"
+                  placeholder="e.g., Python, JavaScript, React, Machine Learning"
+                  autocomplete="off"
+                />
+                <div class="autocomplete-suggestions" id="skillSuggestions"></div>
+                <small class="form-help">Use commas to separate multiple skills</small>
+              </div>
+              
+              <div class="form__field">
+                <label for="operator">🔍 Search Operator</label>
+                <select class="input input--text" id="operator" name="operator">
+                  <option value="AND" {% if search_operator == 'AND' %}selected{% endif %}>AND (all skills must match)</option>
+                  <option value="OR" {% if search_operator == 'OR' %}selected{% endif %}>OR (any skill can match)</option>
+                  <option value="NOT" {% if search_operator == 'NOT' %}selected{% endif %}>NOT (exclude these skills)</option>
+                </select>
+                <small class="form-help">Choose how to combine multiple skills</small>
+              </div>
             </div>
             
-            <div class="form__field">
-              <label for="experience">Experience Level</label>
-              <select class="input input--text" id="experience" name="experience">
-                <option value="">All Experience Levels</option>
-                {% for value, label in experience_levels %}
-                  <option value="{{ value }}" {% if experience_filter == value %}selected{% endif %}>{{ label }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            
-            <div class="form__field">
-              <label for="tech_stack">Technology Stack</label>
-              <input 
-                class="input input--text"
-                id="tech_stack"
-                type="text"
-                name="tech_stack"
-                value="{{ tech_stack_filter }}"
-                placeholder="e.g., Python, React, Django"
-                autocomplete="off"
-              />
-              <div class="autocomplete-suggestions" id="techStackSuggestions"></div>
-            </div>
-            
-            <div class="form__field">
-              <label for="availability">Availability Status</label>
-              <select class="input input--text" id="availability" name="availability">
-                <option value="">All Availability</option>
-                {% for value, label in availability_statuses %}
-                  <option value="{{ value }}" {% if availability_filter == value %}selected{% endif %}>{{ label }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            
-            <div class="form__field">
-              <label for="skills">Skills (comma-separated)</label>
-              <input 
-                class="input input--text"
-                id="skills"
-                type="text"
-                name="skills"
-                value="{{ skill_filter }}"
-                placeholder="e.g., Python, JavaScript, React"
-                autocomplete="off"
-              />
-              <div class="autocomplete-suggestions" id="skillSuggestions"></div>
-            </div>
-            
-            <div class="form__field">
-              <label for="operator">Search Operator</label>
-              <select class="input input--text" id="operator" name="operator">
-                <option value="AND" {% if search_operator == 'AND' %}selected{% endif %}>AND (all skills must match)</option>
-                <option value="OR" {% if search_operator == 'OR' %}selected{% endif %}>OR (any skill can match)</option>
-                <option value="NOT" {% if search_operator == 'NOT' %}selected{% endif %}>NOT (exclude these skills)</option>
-              </select>
+            <!-- Quick Filter Tags -->
+            <div class="quick-filters">
+              <h4>Quick Filters</h4>
+              <div class="filter-tags">
+                <button type="button" class="filter-tag" data-filter="experience:junior">Junior Developers</button>
+                <button type="button" class="filter-tag" data-filter="experience:senior">Senior Developers</button>
+                <button type="button" class="filter-tag" data-filter="availability:open">Open to Work</button>
+                <button type="button" class="filter-tag" data-filter="tech_stack:Python">Python Developers</button>
+                <button type="button" class="filter-tag" data-filter="tech_stack:React">React Developers</button>
+                <button type="button" class="filter-tag" data-filter="tech_stack:Machine Learning">ML Engineers</button>
+              </div>
             </div>
           </div>
           
@@ -189,36 +206,117 @@
         <div class="devlist__header">
           <h2 class="devlist__title">
             <span class="devlist__icon">🌟</span>
-            Featured Developers
+            {% if search_query or location_filter or experience_filter or tech_stack_filter or availability_filter or skill_filter %}
+              Search Results
+            {% else %}
+              Featured Developers
+            {% endif %}
           </h2>
+          {% if search_query or location_filter or experience_filter or tech_stack_filter or availability_filter or skill_filter %}
+            <div class="search-results-info">
+              <p class="search-results-count">
+                Found <strong>{{ users.paginator.count }}</strong> developer{{ users.paginator.count|pluralize }}
+                {% if search_query %}matching "{{ search_query }}"{% endif %}
+              </p>
+              {% if users.paginator.count > 0 %}
+                <div class="active-filters">
+                  {% if search_query %}
+                    <span class="active-filter">Search: "{{ search_query }}"</span>
+                  {% endif %}
+                  {% if location_filter %}
+                    <span class="active-filter">📍 {{ location_filter }}</span>
+                  {% endif %}
+                  {% if experience_filter %}
+                    <span class="active-filter">💼 {{ experience_filter|title }}</span>
+                  {% endif %}
+                  {% if tech_stack_filter %}
+                    <span class="active-filter">⚡ {{ tech_stack_filter }}</span>
+                  {% endif %}
+                  {% if availability_filter %}
+                    <span class="active-filter">🟢 {{ availability_filter|title }}</span>
+                  {% endif %}
+                  {% if skill_filter %}
+                    <span class="active-filter">🛠️ {{ skill_filter }}</span>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
         </div>
 
-        <div class="grid grid--three">
-
-        {% for user in users %}
-          <div class="column card">
-            <div class="dev">
-              <a href="{% url 'profile' user.username %}" class="card__body">
-                <div class="dev__profile">
-                  <img class="avatar avatar--md" src="{{ user.account.avatar.url }}" alt="image" />
-                  <div class="dev__meta">
-                    <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-                    <h5>{{ user.account.summary }}</h5>
-                  </div>
+        {% if users %}
+          <div class="grid grid--three">
+            {% for user in users %}
+              <div class="column card">
+                <div class="dev">
+                  <a href="{% url 'profile' user.username %}" class="card__body">
+                    <div class="dev__profile">
+                      <img class="avatar avatar--md" src="{{ user.account.avatar.url }}" alt="image" />
+                      <div class="dev__meta">
+                        <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                        <h5>{{ user.account.summary }}</h5>
+                        <div class="dev__badges">
+                          <span class="dev__badge dev__badge--{{ user.account.experience_level }}">
+                            {{ user.account.get_experience_level_display }}
+                          </span>
+                          <span class="dev__badge dev__badge--{{ user.account.availability_status }}">
+                            {{ user.account.get_availability_status_display }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="dev__info">{{ user.account.about }}</p>
+                    <div class="dev__skills">
+                        {% for skill in user.account.skill_set.all %}
+                          <span class="tag tag--pill tag--main">
+                            <small>{{ skill.name }}</small>
+                          </span>
+                        {% endfor %}
+                    </div>
+                    {% if user.account.technology_stack %}
+                      <div class="dev__tech-stack">
+                        <strong>Tech Stack:</strong> {{ user.account.technology_stack }}
+                      </div>
+                    {% endif %}
+                    {% if user.account.location %}
+                      <div class="dev__location">
+                        <strong>📍</strong> {{ user.account.location }}
+                      </div>
+                    {% endif %}
+                  </a>
                 </div>
-                <p class="dev__info">{{ user.account.about }}</p>
-                <div class="dev__skills">
-                    {% for skill in user.account.skill_set.all %}
-                      <span class="tag tag--pill tag--main">
-                        <small>{{ skill.name }}</small>
-                      </span>
-                    {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="no-results">
+            <div class="no-results__content">
+              <div class="no-results__icon">🔍</div>
+              <h3 class="no-results__title">No developers found</h3>
+              <p class="no-results__message">
+                {% if search_query or location_filter or experience_filter or tech_stack_filter or availability_filter or skill_filter %}
+                  Try adjusting your search criteria or filters to find more developers.
+                {% else %}
+                  No developers are currently available. Check back later!
+                {% endif %}
+              </p>
+              {% if search_query or location_filter or experience_filter or tech_stack_filter or availability_filter or skill_filter %}
+                <div class="no-results__suggestions">
+                  <h4>Suggestions:</h4>
+                  <ul>
+                    <li>Try broader search terms</li>
+                    <li>Remove some filters</li>
+                    <li>Check spelling</li>
+                    <li>Try different keywords</li>
+                  </ul>
                 </div>
-              </a>
+                <button class="btn btn--outline" onclick="document.getElementById('clearFilters').click()">
+                  Clear All Filters
+                </button>
+              {% endif %}
             </div>
           </div>
-        {% endfor %}
-        </div>
+        {% endif %}
       </div>
     </section>
 
@@ -381,6 +479,96 @@
         document.getElementById(inputId).value = value;
         document.getElementById(inputId + 'Suggestions').style.display = 'none';
       };
+
+      // Quick filter functionality
+      const filterTags = document.querySelectorAll('.filter-tag');
+      filterTags.forEach(tag => {
+        tag.addEventListener('click', function() {
+          const filterData = this.getAttribute('data-filter');
+          const [filterType, filterValue] = filterData.split(':');
+          
+          // Set the appropriate form field
+          switch(filterType) {
+            case 'experience':
+              document.getElementById('experience').value = filterValue;
+              break;
+            case 'availability':
+              document.getElementById('availability').value = filterValue;
+              break;
+            case 'tech_stack':
+              document.getElementById('tech_stack').value = filterValue;
+              break;
+            case 'skills':
+              document.getElementById('skills').value = filterValue;
+              break;
+          }
+          
+          // Show advanced search if hidden
+          if (advancedSearch.style.display === 'none') {
+            advancedSearch.style.display = 'block';
+            toggleAdvanced.textContent = 'Hide Filters';
+          }
+          
+          // Submit the form
+          document.getElementById('searchForm').submit();
+        });
+      });
+
+      // Enhanced search with real-time suggestions
+      function enhanceSearchInput() {
+        const searchInput = document.getElementById('formInput#search');
+        if (searchInput) {
+          searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            if (query.length > 2) {
+              // Show search suggestions or perform live search
+              console.log('Searching for:', query);
+            }
+          });
+        }
+      }
+
+      // Initialize enhanced search
+      enhanceSearchInput();
+
+      // Save search preferences
+      function saveSearchPreferences() {
+        const form = document.getElementById('searchForm');
+        const formData = new FormData(form);
+        const searchParams = new URLSearchParams();
+        
+        for (let [key, value] of formData.entries()) {
+          if (value.trim()) {
+            searchParams.set(key, value);
+          }
+        }
+        
+        localStorage.setItem('searchPreferences', searchParams.toString());
+      }
+
+      // Load search preferences
+      function loadSearchPreferences() {
+        const saved = localStorage.getItem('searchPreferences');
+        if (saved) {
+          const params = new URLSearchParams(saved);
+          params.forEach((value, key) => {
+            const element = document.querySelector(`[name="${key}"]`);
+            if (element) {
+              element.value = value;
+            }
+          });
+        }
+      }
+
+      // Save preferences on form change
+      const form = document.getElementById('searchForm');
+      if (form) {
+        form.addEventListener('change', saveSearchPreferences);
+        form.addEventListener('input', saveSearchPreferences);
+      }
+
+      // Load preferences on page load
+      loadSearchPreferences();
     });
 </script>
 </body>
