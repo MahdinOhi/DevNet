@@ -57,7 +57,7 @@ pre > code * {
 a {
   padding-bottom: 2px;
   text-decoration: none;
-  display: inline-block;
+  
   color: var(--color-main);
   font-weight: var(--font-medium);
 }

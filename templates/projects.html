@@ -29,6 +29,10 @@
   .btn--sub{
     padding: 0.9rem  2rem !important;
   }
+  .hero-section__search{
+    margin-right: auto !important;
+    margin-left: 30rem !important;
+  }
 </style>
 </head>
 
@@ -64,6 +68,7 @@
   <main class="projects">
     <section class="hero-section text-center">
       <div class="container container--narrow">
+        <div class="glass">
         <div class="hero-section__box">
           <h2>Search for <span>Projects</span></h2>
         </div>
@@ -80,6 +85,7 @@
             <input class="btn btn--sub btn--lg" type="submit" value="Search" />
           </form>
         </div>
+        </div>
       </div>
     </section>
     <!-- Search Result: DevList -->
@@ -91,7 +97,9 @@
               <div class="column">
                 <div class="card project">
                   <a href="{% url 'single-project' project.id %}" class="project">
+                    <div class="project__thumbnail-wrapper">
                     <img class="project__thumbnail" src="{{ project.image.url }}" alt="project thumbnail" />
+                  </div>
                     <div class="card__body">
                       <h3 class="project__title">{{ project.title }}</h3>
                       <p><a class="project__author" href="{% url 'profile' project.user.username %}">By {{ project.user.first_name }} {{ project.user.last_name }}</a></p>

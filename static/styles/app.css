@@ -399,6 +399,7 @@ body{
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 /* No Results State */
@@ -511,8 +512,21 @@ body{
   overflow: visible;
   
 }
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+}
 
+.logo-dev {
+  color: #00c2ff; /* orange or any accent color */
+  font-size: 3.5rem;
+}
 
+.logo-net {
+  color: #ff7b00;
+  font-size: 3.5rem; /* blue or another contrasting color */
+
+}
 .header__logo > img {
   height: 200px;
   width: auto;
@@ -715,7 +729,14 @@ body.dark-theme .theme-toggle__icon--moon {
   display: none;
 }
 
-
+/* Enhanced glow when scrolled */
+.header.scrolled .header__logo {
+  background: rgba(255, 255, 255, 0.1); /* subtle glass effect */
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  border: none;
+  box-shadow: none; /* removes glow/shadow */
+}
 /* Enhanced glow when scrolled */
 .header.scrolled .header__menu {
   background: rgba(255, 255, 255, 0.2);
@@ -890,11 +911,14 @@ body.dark-theme .theme-toggle__icon--moon {
   justify-content: center;
   background: transparent;
   padding: 1.5rem 6rem;
+  padding-top: 0px;
+  
 }
 
 .hero-section .container {
   width: 100%;
   max-width: 1300px;
+  margin-bottom: 3rem;
 }
 
 /* Glass Card with Vertical Centering */
@@ -1169,6 +1193,7 @@ body.dark-theme .theme-toggle__icon--moon {
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  padding-left: 0.2rem;
 }
 
 .devlist .dev .dev__meta h3 {
@@ -1188,6 +1213,11 @@ body.dark-theme .theme-toggle__icon--moon {
   font-size: 1.35rem;
   line-height: 1.4;
   text-align: justify;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.devlist .dev .dev__skills{
+  margin-left: 1rem;
 }
 
 /*=======================
@@ -1238,8 +1268,8 @@ body.dark-theme .theme-toggle__icon--moon {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
+  margin-bottom: 0rem;
+  padding-bottom: 0rem;
   max-width: 1400px;
   margin-left: auto;
   margin-right: 5rem;
@@ -1248,30 +1278,26 @@ body.dark-theme .theme-toggle__icon--moon {
 /* Footer Logo */
 .footer__logo {
   flex-shrink: 0;
+  padding: 0.5rem 1.5rem;
+  padding-bottom: 3rem;
+  overflow: visible;
+  background-color: transparent;
 }
 
 .footer__logo a {
   display: inline-block;
   padding: 1.2rem 2rem;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+ 
 }
 
-.footer__logo a:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-}
+
 
 .footer__logo img {
-  height: 3rem;
+ height: 200px;
+  width: auto;
   display: block;
+  background-color: transparent;
+  background: transparent;
 }
 
 /* Footer Navigation */
@@ -1496,7 +1522,13 @@ body.dark-theme .theme-toggle__icon--moon {
 }
 
 .devInfo {
+   background: rgba(255, 255, 255, 0.15); /* semi-transparent */
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
   margin-bottom: 3rem;
+  border-radius: 20px;
 }
 
 .devInfo__title,
@@ -1506,11 +1538,14 @@ body.dark-theme .theme-toggle__icon--moon {
   text-transform: uppercase;
   font-weight: 700;
   margin-bottom: 1.5rem;
+  padding-left: 2rem;
+  padding-top: 2rem;
 }
 
 .devInfo__subtitle {
   font-size: 2rem;
   color: var(--color-sub-light);
+  padding-bottom: 2rem;
 }
 
 .devInfo__about,
@@ -1518,10 +1553,21 @@ body.dark-theme .theme-toggle__icon--moon {
   font-size: 1.45rem;
   line-height: 1.7;
   text-align: justify;
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+  padding-right: 1.2rem;
 }
+
+.form__field{
+   padding-left: 2rem;
+   padding-right: 1.2rem;
+
+}
+
 
 .devSkill {
   margin-bottom: 3rem;
+  padding-left: 2rem;
 }
 
 .devSkill__title {
@@ -1561,13 +1607,17 @@ body.dark-theme .theme-toggle__icon--moon {
 
 .singleProject__toolStack {
   margin-top: 2rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
+  padding-right: 1rem;
+  padding-left: 2rem;
 }
 
 .singleProject__liveLink {
   font-weight: 500;
   transition: all 0.3s ease-in-out;
   border-bottom: 2px solid transparent;
+  padding-left: 2rem;
+  
 }
 
 .singleProject__liveLink:hover {
@@ -1579,10 +1629,11 @@ body.dark-theme .theme-toggle__icon--moon {
   display: inline-block;
   font-size: 1.6rem;
   margin-right: 1rem;
+  padding-bottom: 2rem;
 }
 
 .singleProject__preview {
-  height: 50vh;
+  height: 30vh;
   object-fit: cover;
   object-position: top center;
   margin-bottom: 3rem;
@@ -1592,6 +1643,7 @@ body.dark-theme .theme-toggle__icon--moon {
 .singleProject__developer {
   font-size: 1.8rem;
   font-weight: 500;
+  align-items: first baseline;
 }
 
 .singleProject__title {
@@ -1599,6 +1651,8 @@ body.dark-theme .theme-toggle__icon--moon {
   font-weight: 700;
   color: var(--color-sub);
   margin-bottom: 3rem;
+  padding-left: 2rem;
+  margin-top: 1rem;
 }
 
 .project__author{
@@ -1617,13 +1671,15 @@ body.dark-theme .theme-toggle__icon--moon {
   font-weight: 700;
   color: var(--color-sub-light);
   margin-bottom: 1rem;
+  padding-left: 2rem;
+  
 }
 
 /*=======================
   Projects Page
 ========================*/
 .projects > .hero-section {
-  background: var(--color-sub-lighter);
+ 
   height: 30vh;
 }
 
@@ -1638,6 +1694,7 @@ body.dark-theme .theme-toggle__icon--moon {
 .projects .hero-section__box > h2 > span {
   font-weight: 700;
   color: var(--color-sub);
+  font-size: 4.8rem;
 }
 
 .projectsList {
@@ -1646,10 +1703,30 @@ body.dark-theme .theme-toggle__icon--moon {
 
 /*========== Projects ==========*/
 
+
+.project__thumbnail-wrapper {
+  width: 100%;
+  height: 30rem;
+  overflow: hidden;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  align-items: center;
+  display: flex;
+  padding-left: 20px;
+  padding-right: 20px;
+  justify-content: center;
+}
+
 .project__thumbnail {
-  height: 25rem;
-  object-fit: cover;
-  object-position: top center;
+   flex: 1;
+  width: 100%;
+  height: 100%;
+  object-fit:fill;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s ease;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .project__title {
@@ -1711,6 +1788,13 @@ body.dark-theme .theme-toggle__icon--moon {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: rgba(255, 255, 255, 0.15); /* semi-transparent */
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
 }
 
 .settings__title {
@@ -1724,7 +1808,12 @@ body.dark-theme .theme-toggle__icon--moon {
   margin-top: 3rem;
   margin-bottom: 5rem;
   padding: 0 3rem;
-  background: var(--color-white);
+ background: rgba(255, 255, 255, 0.15); /* semi-transparent */
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
 }
 
 .settings__table tr {
@@ -1875,10 +1964,13 @@ body.dark-theme .theme-toggle__icon--moon {
 
 .messages {
   list-style: none;
-  background: var(--color-white);
+ background: rgba(255, 255, 255, 0.15); /* semi-transparent */
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
   padding: 0.5rem 3rem;
   border: 2px solid var(--color-light);
-  border-radius: 0.7rem;
 }
 
 .message {
@@ -1923,10 +2015,14 @@ body.dark-theme .theme-toggle__icon--moon {
 
 .messagePage .message {
   list-style: none;
-  background: var(--color-white);
+ background: rgba(255, 255, 255, 0.15); /* semi-transparent */
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
   padding: 3.5rem 5rem;
   border: 2px solid var(--color-light);
-  border-radius: 0.7rem;
+ 
 }
 
 .messagePage .message__subject {

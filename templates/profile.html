@@ -33,6 +33,12 @@
     .dev__location{
     justify-content: center !important;
   }
+  .grid--two{
+    padding-left: 2rem !important;
+  }
+  .devInfo__otherSkills{
+    padding-left: 2rem !important;
+  } 
   </style>
   
 </head>
@@ -185,7 +191,7 @@
             {% for project in projects %}
                 <div class="column">
                     <div class="card project">
-                      <a href="{% url 'single-project' project.id %}" class="project">
+                      <a href="{% url 'single-project' project.id %}" class="project">   
                         <img class="project__thumbnail" src="{{ project.image.url }}" alt="project thumbnail" />
                         <div class="card__body">
                           <h3 class="project__title">{{ project.title }}</h3>

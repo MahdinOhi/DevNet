@@ -52,6 +52,7 @@
     <div class="container">
       <div class="layout">
         <div class="column column--1of3">
+          <div class="project__side">
           <h3 class="singleProject__subtitle">Tools & Stacks</h3>
           <div class="singleProject__toolStack">
               {% for tag in project.tags %}
@@ -62,10 +63,15 @@
           </div>
           <a class="singleProject__liveLink" href="{{ project.link }}" target="_blank"><i class="im im-external-link"></i>Source Code
           </a>
+          </div>
         </div>
         <div class="column column--2of3">
+          <div class="project__body">
           <img class="singleProject__preview" src="{{ project.image.url }}" alt="portfolio thumbnail" />
+          <div class="project__user">
           <a href="{% url 'profile' project.user.username %}" class="singleProject__developer">{{ project.user.first_name }} {{ project.user.last_name }}</a>
+          </div>
+          <div class="">
           <h2 class="singleProject__title">{{ project.title }}</h2>
           <h3 class="singleProject__subtitle">About the Project</h3>
           <div class="singleProject__info">
@@ -78,7 +84,7 @@
             {% if not request.user.is_authenticated %}
                  <a href="{% url 'login' %}">Please login to leave a review</a>
             {% elif request.user == project.user %}
-                 <p>You cannot comment your own work</p>
+                 <p class="warning">You cannot comment your own work</p>
             {% else %}
                 <form class="form" method="POST">
                   {% csrf_token %}
@@ -119,6 +125,7 @@
               </div>
             </div>
           </div>
+          </div>
         </div>
       </div>
     </div>
@@ -126,6 +133,49 @@
   </main>
   
   <style>
+     .container--narrow{
+    justify-content: flex-start !important;
+    gap: 35rem !important;
+  }
+  .header__menuItem > a{
+    font-size: 1.4rem !important;
+  }
+  .btn--sub{
+    padding: 0.9rem  2rem !important;
+  }
+
+  .project__user{
+    text-align: left;
+    padding-left: 2rem;
+  }
+  .project__body{
+    background: rgba(255, 255, 255, 0.15); /* semi-transparent */
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+
+  }
+  .singleProject__info{
+
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .warning{
+      padding-left: 2rem;
+    
+  }
+  .project__side{
+
+    background: rgba(255, 255, 255, 0.15); /* semi-transparent */
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+  }
+  .project__side .singleProject__subtitle{
+    padding-top: 2rem;
+  }
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }

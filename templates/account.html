@@ -35,6 +35,11 @@
   .dev__location{
     justify-content: center !important;
   }
+  .btn-up{
+    margin-left: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
 </style>
 
 </head>
@@ -107,7 +112,7 @@
                 <input type="file" id="resume" name="resume" accept=".docx,.pdf" required>
                 <p class="form__help">Upload your resume or portfolio as a DOCX or PDF file. The system will automatically extract and display your information, and update your skills and projects.</p>
               </div>
-              <button class="btn btn--sub btn--lg" type="submit">Upload Resume</button>
+              <button class="btn btn-up btn--sub btn--lg" type="submit">Upload Resume</button>
             </form>
             
             {% if user.account.resume_file %}
